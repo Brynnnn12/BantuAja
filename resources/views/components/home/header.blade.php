@@ -42,6 +42,8 @@
                             class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                             <a href="{{ route('profile.edit') }}"
                                 class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profile</a>
+                            <a href="{{ route('home.donations.index') }}"
+                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Donasi Saya</a>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <button type="submit"
@@ -88,6 +90,10 @@
                 @auth
                     <a href="{{ route('dashboard') }}"
                         class="block px-3 py-2 text-gray-700 hover:text-blue-600">Dashboard</a>
+
+                    <a href="{{ route('home.donations.index') }}"
+                        class="block px-3 py-2 text-gray-700 hover:text-blue-600">Donasi
+                        Saya</a>
                     <form method="POST" action="{{ route('logout') }}" class="block">
                         @csrf
                         <button type="submit" class="w-full text-left px-3 py-2 text-gray-700 hover:text-blue-600">

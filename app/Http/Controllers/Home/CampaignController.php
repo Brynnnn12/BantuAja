@@ -18,11 +18,11 @@ class CampaignController extends Controller
         if ($request->has('filter')) {
             switch ($request->get('filter')) {
                 case 'urgent':
-                    // Campaigns with less than 30% progress
+                    //ini untuk campaign yang progressnya dibawah 30%
                     $query->whereRaw('(collected_amount / target_amount * 100) < 30');
                     break;
                 case 'almost':
-                    // Campaigns with more than 80% progress
+                    //ini untuk campaign yang progressnya diatas 80%
                     $query->whereRaw('(collected_amount / target_amount * 100) > 80');
                     break;
             }

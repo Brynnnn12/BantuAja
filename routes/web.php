@@ -19,11 +19,11 @@ Route::prefix('campaigns')->name('home.campaigns.')->group(function () {
     Route::get('/{campaign}', [HomeCampaignController::class, 'show'])->name('show');
 });
 
-//index
-Route::get('/donate', [HomeDonationController::class, 'index'])->name('index');
 
 
 Route::middleware('auth')->prefix('donations')->name('home.donations.')->group(function () {
+    Route::get('/', [HomeDonationController::class, 'index'])->name('index');
+
     Route::post('/', [HomeDonationController::class, 'store'])->name('store');
 });
 
@@ -47,7 +47,11 @@ Route::prefix('dashboard')->middleware(['auth', 'verified'])->group(function () 
     Route::get('/', function () {
         return view('dashboard');
     })->name('dashboard');
-    Route::resource('campaigns', \App\Http\Controllers\CampaignController::class);
+
+    Route::middleware('role:Admin')->group(function () {
+        Route::resource('campaigns', \App\Http\Controllers\CampaignController::class);
+    });
+
     Route::resource('donations', \App\Http\Controllers\DonationController::class);
     Route::resource('payments', \App\Http\Controllers\PaymentController::class)->only(['index', 'show']);
 });

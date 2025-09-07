@@ -72,17 +72,19 @@
                                             <div class="flex space-x-2">
                                                 <a href="{{ route('donations.show', $donation) }}"
                                                     class="text-indigo-600 hover:text-indigo-900">View</a>
-                                                <a href="{{ route('donations.edit', $donation) }}"
-                                                    class="text-yellow-600 hover:text-yellow-900">Edit</a>
-                                                <form action="{{ route('donations.destroy', $donation) }}"
-                                                    method="POST" class="inline">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="text-red-600 hover:text-red-900"
-                                                        onclick="return confirm('Are you sure you want to delete this donation?')">
-                                                        Delete
-                                                    </button>
-                                                </form>
+                                                @if (Auth::user()->role === 'User')
+                                                    <a href="{{ route('donations.edit', $donation) }}"
+                                                        class="text-yellow-600 hover:text-yellow-900">Edit</a>
+                                                    <form action="{{ route('donations.destroy', $donation) }}"
+                                                        method="POST" class="inline">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="text-red-600 hover:text-red-900"
+                                                            onclick="return confirm('Are you sure you want to delete this donation?')">
+                                                            Delete
+                                                        </button>
+                                                    </form>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>

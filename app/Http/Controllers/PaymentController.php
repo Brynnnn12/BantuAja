@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Payment;
 use App\Http\Requests\StorePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
@@ -14,7 +15,11 @@ class PaymentController extends Controller
     public function index()
     {
         //
-        $payments = Payment::with('donation')->paginate(10);
+        $payments = Auth::user()->hasRole('Admin') ?
+            Payment::with('donation.user', 'donation.campaign')->orderByDesc('created_at')->get() :
+            Payment::whereHas('donation', function ($query) {
+                $query->where('user_id', Auth::id());
+            })->with('donation.campaign')->orderByDesc('created_at')->get();
         return view('dashboard.payments.index', compact('payments'));
     }
 

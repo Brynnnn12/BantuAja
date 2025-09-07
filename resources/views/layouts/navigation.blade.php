@@ -19,9 +19,11 @@
                     <x-nav-link :href="route('payments.index')" :active="request()->routeIs('payments.*')">
                         {{ __('Payments') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('campaigns.index')" :active="request()->routeIs('campaigns.*')">
-                        {{ __('Campaigns') }}
-                    </x-nav-link>
+                    @if (Auth::user()->hasRole('Admin'))
+                        <x-nav-link :href="route('campaigns.index')" :active="request()->routeIs('campaigns.*')">
+                            {{ __('Campaigns') }}
+                        </x-nav-link>
+                    @endif
                     <x-nav-link :href="route('donations.index')" :active="request()->routeIs('donations.*')">
                         {{ __('Donations') }}
                     </x-nav-link>
@@ -91,9 +93,11 @@
             <x-responsive-nav-link :href="route('payments.index')" :active="request()->routeIs('payments.*')">
                 {{ __('Payments') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('campaigns.index')" :active="request()->routeIs('campaigns.*')">
-                {{ __('Campaigns') }}
-            </x-responsive-nav-link>
+            @if (Auth::user()->hasRole('Admin'))
+                <x-responsive-nav-link :href="route('campaigns.index')" :active="request()->routeIs('campaigns.*')">
+                    {{ __('Campaigns') }}
+                </x-responsive-nav-link>
+            @endif
             <x-responsive-nav-link :href="route('donations.index')" :active="request()->routeIs('dashboard.donations.*')">
                 {{ __('Donations') }}
             </x-responsive-nav-link>

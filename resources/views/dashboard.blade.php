@@ -184,7 +184,7 @@
                             </div>
                         </a>
 
-                        <a href="{{ route('dashboard.payments.index') }}"
+                        <a href="{{ route('payments.index') }}"
                             class="flex items-center p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors">
                             <div class="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center">
                                 <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor"

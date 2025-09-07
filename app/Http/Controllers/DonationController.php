@@ -14,7 +14,10 @@ class DonationController extends Controller
      */
     public function index()
     {
-        $donations = Donation::paginate(10);
+        // Admin melihat semua donasi, user biasa hanya melihat donasi miliknya saja    
+        $donations = Auth::user()->hasRole('Admin') ?
+            Donation::with('user', 'campaign')->orderByDesc('created_at')->get() :
+            Donation::where('user_id', Auth::id())->with('campaign')->orderByDesc('created_at')->get();
         return view('dashboard.donations.index', compact('donations'));
     }
 
@@ -50,6 +53,10 @@ class DonationController extends Controller
      */
     public function show(Donation $donation)
     {
+
+        if (!Auth::user()->hasRole('Admin') && $donation->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
         $donation->load('user', 'campaign');
 
         return view('dashboard.donations.show', compact('donation'));
@@ -60,6 +67,10 @@ class DonationController extends Controller
      */
     public function edit(Donation $donation)
     {
+        if (!Auth::user()->hasRole('Admin') && $donation->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
         $donation->load('user', 'campaign');
 
         return view('dashboard.donations.edit', compact('donation'));
@@ -70,6 +81,7 @@ class DonationController extends Controller
      */
     public function update(UpdateDonationRequest $request, Donation $donation)
     {
+
         $data = $request->validated();
 
         // Pastikan user_id tidak diubah

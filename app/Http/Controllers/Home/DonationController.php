@@ -17,10 +17,12 @@ class DonationController extends Controller
      */
     public function index()
     {
+        //hanya bisa melihat donasi miliknya sendiri
+        $donations = Donation::where('user_id', Auth::id())->with('campaign')->orderByDesc('created_at')->get();
         // Get active campaigns for display (if needed)
         $campaigns = Campaign::where('status', 'active')->orderByDesc('created_at')->get();
 
-        return view('home.donations.index', compact('campaigns'));
+        return view('home.donations.index', compact('donations', 'campaigns'));
     }
 
     public function store(Request $request)
